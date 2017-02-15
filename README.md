@@ -42,7 +42,7 @@ See [`src/rbac.coffee`](src/rbac.coffee) for full documentation.
 Variable | Default | Description
 --- | --- | ---
 `HUBOT_RBAC_POWER_USERS` | N/A | A comma-separated list of user names to be granted complete, and immutable permissions.
-
+`HUBOT_RBAC_SLACK` | false | Optional boolean flag to setup use in slack
 
 ## Commands
 

@@ -3,6 +3,7 @@
 #
 # Configuration:
 #   HUBOT_RBAC_POWER_USERS
+#   HUBOT_RBAC_SLACK Optional boolean flag to setup use in slack
 #
 # Commands:
 #   hubot auth me - Returns your current role(s).
@@ -26,6 +27,9 @@ Immutable = require "immutable"
 
 # Config
 HUBOT_RBAC_POWER_USERS = process.env.HUBOT_RBAC_POWER_USERS
+HUBOT_RBAC_SLACK = process.env.HUBOT_RBAC_SLACK == 'true' ? true : false
+
+console.log('hubot_rbac_slack', HUBOT_RBAC_SLACK)
 
 module.exports = (robot) ->
     _powerUsers = []
@@ -89,7 +93,12 @@ module.exports = (robot) ->
 
     robot.respond /auth me/i, id: "auth.me", (res) ->
         # TODO: List blacklist?
-        subject = res.message.user.id
+
+        if HUBOT_RBAC_SLACK
+            subject = res.message.user.name
+        else 
+            subject = res.message.user.id
+
         if not _subjects.has(subject) or _subjects.get(subject).size is 0
             res.reply "You are not assigned to any roles."
         else
@@ -163,7 +172,11 @@ module.exports = (robot) ->
 
     robot.listenerMiddleware (context, next, done) ->
         lid = context.listener.options.id
-        subject = context.response.message.user.id
+        
+        if HUBOT_RBAC_SLACK
+            subject = context.response.message.user.name
+        else 
+            subject = context.response.message.user.id
 
         terminate = false
         _blockRequest = ->
