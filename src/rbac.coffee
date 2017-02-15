@@ -30,8 +30,6 @@ Immutable = require "immutable"
 HUBOT_RBAC_POWER_USERS = process.env.HUBOT_RBAC_POWER_USERS
 HUBOT_RBAC_SLACK = process.env.HUBOT_RBAC_SLACK == 'true' ? true : false
 
-console.log('hubot_rbac_slack', HUBOT_RBAC_SLACK)
-
 module.exports = (robot) ->
     _powerUsers = []
     if HUBOT_RBAC_POWER_USERS?
