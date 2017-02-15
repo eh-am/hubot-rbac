@@ -75,14 +75,15 @@ module.exports = (robot) ->
         robot.logger.debug "hubot-rbac: policies -> #{_policies}"
 
     _updateSubject = (subject, role, assign = true) ->
-        newSubjects = _subjects.update subject, Immutable.Set(), (set) ->
-            if assign
-                robot.logger.debug "hubot-rbac: assigning role..."
-                set.add role
-            else
-                robot.logger.debug "hubot-rbac: unassigning role..."
-                set.remove role
-
+        
+        if assign
+            newSubjects = _subjects.update subject, Immutable.Set(), (set) ->
+                if assign
+                    robot.logger.debug "hubot-rbac: assigning role..."
+                    set.add role
+        else
+            newSubjects = _subjects.remove subject
+        
         _subjects = newSubjects
         _saveRBAC()
         robot.logger.debug "hubot-rbac: subjects -> #{_subjects}"
@@ -182,7 +183,7 @@ module.exports = (robot) ->
 
     robot.listenerMiddleware (context, next, done) ->
         lid = context.listener.options.id
-        
+
         if HUBOT_RBAC_SLACK
             subject = context.response.message.user.name
         else 
@@ -197,15 +198,14 @@ module.exports = (robot) ->
             return false
 
         # Skip if there are:
-            # no default role and no subjects
-            # no policies or
-            # if it is a power user
-        if (!_default and _subjects.size is 0) or _policies.size is 0 or _isPower(subject)
+        if (_policies.size is 0 or _isPower(subject))
+
             robot.logger.debug "hubot-rbac: Skipping checks..."
             next()
             return false
         # Check default role if the subject has no roles
         else if not _subjects.has(subject)
+
             if _policies.hasIn [_default, lid]
                 _blockRequest subject, lid
         # Otherwise, check roles for blacklisted listener IDs
