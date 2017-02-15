@@ -14,6 +14,7 @@
 #   hubot auth default <role> - Changes the default <role> for unassigned subjects.
 #   hubot auth ids - Returns a list of listener IDs that can be blocked.
 #   hubot auth roles - Returns a list of roles, and their respective subjects.
+#   hubot auth policies - Returns a list of roles, and their policies.
 #
 # Notes:
 #   WIP
@@ -169,6 +170,17 @@ module.exports = (robot) ->
             noResults = false
 
         return res.reply "There are no assigned roles." if noResults
+
+    robot.respond /auth policies/i, id: "auth.policies", (res) ->
+        response = []
+
+        pol = _policies.toJS()
+        keys = Object.keys(_policies.toJS())
+
+        for own key, value of keys
+            response.push(value + ": " + pol[value].join(", "))
+
+        return res.reply "Policies: \n#{response.join("\n")}"
 
     robot.listenerMiddleware (context, next, done) ->
         lid = context.listener.options.id

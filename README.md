@@ -56,6 +56,7 @@ hubot auth unassign `subject` `role` | `auth.unassign` | Unassigns `subject` fro
 hubot auth default `role` | `auth.default` | Changes the default `role` for unassigned subjects.
 hubot auth ids | `auth.ids` | Returns a list of listener IDs that can be blocked.
 hubot auth roles | `auth.roles` | Returns a list of roles, and their respective subjects.
+hubot auth policies | `auth.policies` | Returns a list of roles, and their policies.
 
 
 ## Sample Interaction
