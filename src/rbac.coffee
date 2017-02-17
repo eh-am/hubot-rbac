@@ -198,6 +198,10 @@ module.exports = (robot) ->
             return false
 
         # Skip if there are:
+            # no default role and no subjects
+            # no policies or
+            # if it is a power user
+        # if (!_default and _subjects.size is 0) or _policies.size is 0 or _isPower(subject)
         if (_policies.size is 0 or _isPower(subject))
 
             robot.logger.debug "hubot-rbac: Skipping checks..."
