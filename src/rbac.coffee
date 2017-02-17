@@ -28,7 +28,7 @@ Immutable = require "immutable"
 
 # Config
 HUBOT_RBAC_POWER_USERS = process.env.HUBOT_RBAC_POWER_USERS
-HUBOT_RBAC_SLACK = process.env.HUBOT_RBAC_SLACK == 'false' ? false : true
+HUBOT_RBAC_SLACK = if (process.env.HUBOT_RBAC_SLACK == 'false') then false else true
 
 module.exports = (robot) ->
     _powerUsers = []
