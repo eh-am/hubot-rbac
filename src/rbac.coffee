@@ -22,13 +22,13 @@
 #   Case-sensitivity
 #
 # Author:
-#   MrSaints
+#   MrSaints, eh-am
 
 Immutable = require "immutable"
 
 # Config
 HUBOT_RBAC_POWER_USERS = process.env.HUBOT_RBAC_POWER_USERS
-HUBOT_RBAC_SLACK = process.env.HUBOT_RBAC_SLACK == 'true' ? true : false
+HUBOT_RBAC_SLACK = process.env.HUBOT_RBAC_SLACK == 'false' ? false : true
 
 module.exports = (robot) ->
     _powerUsers = []
@@ -197,13 +197,7 @@ module.exports = (robot) ->
             terminate = true
             return false
 
-        # Skip if there are:
-            # no default role and no subjects
-            # no policies or
-            # if it is a power user
-        # if (!_default and _subjects.size is 0) or _policies.size is 0 or _isPower(subject)
         if (_policies.size is 0 or _isPower(subject))
-
             robot.logger.debug "hubot-rbac: Skipping checks..."
             next()
             return false
