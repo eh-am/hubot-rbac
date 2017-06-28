@@ -1,4 +1,4 @@
-# hubot-rbac
+# hubot-rbac-slack
 
 [![Build Status](https://travis-ci.org/ClaudeBot/hubot-rbac.svg)](https://travis-ci.org/ClaudeBot/hubot-rbac)
 [![Dependency Status](https://david-dm.org/ClaudeBot/hubot-rbac.svg)](https://david-dm.org/ClaudeBot/hubot-rbac)

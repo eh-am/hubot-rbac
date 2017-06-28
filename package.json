@@ -5,6 +5,9 @@
   "author": "Eduardo Aleixo <eduardoaleixomartins@gmail.com>",
   "license": "MIT",
   "keywords": "hubot, hubot-scripts, acl, rbac, roles, authorization, authentication, restriction, whitelist, blacklist, command",
+  "publishConfig": {
+    "registry": "https://nexus.tekstack.ca/repository/npm-hosted/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/eh-am/hubot-rbac-slack.git"
